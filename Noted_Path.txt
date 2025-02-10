@@ -1,0 +1,15 @@
+docker pull mongo:latest
+
+docker run --name mongodb-container -p 27017:27017 -d mongo:latest
+
+
+docker exec -it nama_container_mongodb /bin/bash
+
+=> mongosh -u UserTask(as username) -p Admin123(as password) --authenticationDatabase UserTask(as database) : membuat connection database di mongo
+
+
+-- untuk setting di property aplicatioon
+spring.data.mongodb.uri=mongodb://UserTask:Admin123@localhost:27017/UserTask
+
+
+docker run -d --name container-UserTask -e POSTGRES_USER=UserTask -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=UserTask -p 5433:5432 \ postgres

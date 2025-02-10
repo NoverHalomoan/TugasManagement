@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/UserTask
+    username: UserTask
+    password: admin123
+    name: UserTask
+  jpa:
+    hibernate: ddl:auto:update
+
+sql:
+  init: mode:always
+    schema-locations:classpath:/schema.sql

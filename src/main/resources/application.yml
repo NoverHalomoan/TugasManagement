@@ -1,0 +1,30 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: ManagementTugas
+    description: This for tugas apps.
+    author: NoverHalomoan
+    version: "@project.version@"
+spring:
+  #  profiles:
+  #    active: dev
+  sql:
+    init: mode:always
+      schema-locations:classpath:/schema.sql
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+  # flyway: enabled:false
+  #   baseline-on-migrate:true
+  #   schemas:DATATASK
+# springdoc:
+#   swagger-ui:
+#     operations-sorter: name
