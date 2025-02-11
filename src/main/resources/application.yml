@@ -14,8 +14,8 @@ info:
     author: NoverHalomoan
     version: "@project.version@"
 spring:
-  #  profiles:
-  #    active: dev
+  profiles:
+    active: dev
   sql:
     init: mode:always
       schema-locations:classpath:/schema.sql
