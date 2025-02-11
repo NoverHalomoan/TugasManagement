@@ -5,9 +5,11 @@ import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.Year;
 import java.util.Base64;
 import java.util.UUID;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.ManagementTugas.ManagementTugas.repository.UserRepository;
@@ -20,8 +22,11 @@ public class GeneratedToken {
 
     private UserRepository userRepository;
 
-    public GeneratedToken(UserRepository userRepository) {
+    private final JdbcTemplate jdbcTemplate;
+
+    public GeneratedToken(UserRepository userRepository, JdbcTemplate jdbcTemplate) {
         this.userRepository = userRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public String generatedTokenid() {
@@ -112,7 +117,7 @@ public class GeneratedToken {
 
         for (Cookie cookie : cookies) {
             if (cookie.getName().matches("authToken")) {
-                return userRepository.findByToken(cookie.getValue()).isPresent() ? 1 : 0;
+                return userRepository.findByTokenlogin(cookie.getValue()).isPresent() ? 1 : 0;
             }
         }
         return 0;
@@ -127,6 +132,15 @@ public class GeneratedToken {
             }
         }
         return "";
+    }
+
+    // Generated ID for tugas
+    public String generatedIdTugas() {
+        int years = Year.now().getValue() % 100;
+        Long nextval = jdbcTemplate.queryForObject("select nextval('datatask.custom_id_seq')", Long.class);
+        String sequenceformat = String.format("%08d", nextval);
+
+        return "T" + years + sequenceformat;
     }
 
 }

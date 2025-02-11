@@ -6,7 +6,7 @@ import com.ManagementTugas.ManagementTugas.model.TugasSaya;
 
 public interface InterCustomeTaskRepo {
 
-    TugasSaya save(TugasSaya tugasSaya);
+    // TugasSaya saveTugasSaya(TugasSaya tugasSaya);
 
     // Optional<TugasSaya> findByidtugas(String idtugas);
 

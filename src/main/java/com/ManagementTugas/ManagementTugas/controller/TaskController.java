@@ -60,18 +60,28 @@ public class TaskController {
             "  \"berakhirtugas\": \"2025-02-10 12:30:00\",\r\n" + //
             "  \"deskripsi\":\"Deksrpsi Test\",\r\n" + //
             "  \"completed\":true,\r\n" + //
-            "  \"ide_tugas\":\"Membuat Sistem Pembayaran\",\r\n" + //
             "  \"id_user\":\"d2ae8ec7-7558-451a-9dda-db822749d585\",\r\n" + //
             "  \"id_project\":\"1\"\r\n" + //
             "}")))
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Valid Request", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ""))),
+            @ApiResponse(responseCode = "200", description = "Valid Request", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\r\n"
+                    + //
+                    "  \"status\": 200,\r\n" + //
+                    "  \"message\": Tugas Sukses DiInsert,\r\n" + //
+                    "  \"data\": {\r\n" + //
+                    "    \"idtugas\": \"T2500000012\",\r\n" + //
+                    "    \"namatugas\": \"Payment in Minchart\",\r\n" + //
+                    "    \"mulaitugas\": \"2025-02-10T12:30:00\",\r\n" + //
+                    "    \"berakhirtugas\": \"2025-02-10T12:30:00\",\r\n" + //
+                    "    \"deskripsi\": \"Deksrpsi Test\",\r\n" + //
+                    "    \"completed\": true\r\n" + //
+                    "  }\r\n" + //
+                    "}"))),
             @ApiResponse(responseCode = "403", description = "invalid Request", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\r\n"
                     + //
                     "  \"status\": \"400\",\r\n" + //
                     "  \"message\": \"Error Request Tidak Sesuai\",\r\n" + //
                     "  \"data\": {\r\n" + //
-                    "    \"ide_tugas\": \"Ide Tugas Tidak Boleh Kosong\"\r\n" + //
                     "  }\r\n" + //
                     "}")))
     })
@@ -84,6 +94,6 @@ public class TaskController {
     // get all project
     @GetMapping("/all-projects")
     public ResponseEntity<?> getallprojects(HttpServletRequest httpRequest) {
-        return ResponseEntity.status(200).body(apiResponseData);
+        return ResponseEntity.status(200).body(serviceTask.getallprojects(httpRequest));
     }
 }

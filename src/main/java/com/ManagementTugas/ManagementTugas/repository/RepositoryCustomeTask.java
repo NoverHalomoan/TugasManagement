@@ -10,7 +10,6 @@ import com.ManagementTugas.ManagementTugas.model.TugasSaya;
 import jakarta.persistence.EntityManager;
 
 @Repository
-@Primary
 public class RepositoryCustomeTask implements InterCustomeTaskRepo {
 
     private final TaskRepository taskRepository;
@@ -19,14 +18,13 @@ public class RepositoryCustomeTask implements InterCustomeTaskRepo {
         this.taskRepository = taskRepository;
     }
 
-    @Override
-    public TugasSaya save(TugasSaya tugasSaya) {
+    // @Override
+    // public TugasSaya saveTugasSaya(TugasSaya tugasSaya) {
 
-        taskRepository.save(tugasSaya);
-        return tugasSaya;
-        // TODO Auto-generated method stub
+    // taskRepository.save(tugasSaya);
+    // return tugasSaya;
 
-    }
+    // }
 
     // @Override
     // public Optional<TugasSaya> findByid_tugas(String idtugas) {

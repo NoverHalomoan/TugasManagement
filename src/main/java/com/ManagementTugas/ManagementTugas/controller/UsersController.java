@@ -45,7 +45,7 @@ public class UsersController {
                         + //
                         "\"name\":\"VerTersting\",\r\n" + //
                         " \"email\":\"Emailtesting@gmail.com\",\r\n" + //
-                        "\"password\":\"Pass123\"\r\n" + //
+                        "\"password\":\"Pass123123\"\r\n" + //
                         "}")))
         @ApiResponses({
                         @ApiResponse(responseCode = "200", description = "Request Successfully", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\r\n"
@@ -64,7 +64,7 @@ public class UsersController {
                                         "  \"data\": null" + //
                                         "}")))
         })
-        public ResponseEntity<?> ACretateuser(@RequestHeader Map<String, String> headers,
+        public ResponseEntity<?> Cretateuser(@RequestHeader Map<String, String> headers,
                         @org.springframework.web.bind.annotation.RequestBody CreateUserDTO createUserDTO) {
                 if (headers.get("Content-Type") == "") {
                         apiResponseData.setMessage("Wajib Mengisi Header");
@@ -89,7 +89,7 @@ public class UsersController {
                         "\n3. <b>JWT</b> yang digenerate harus memuat payload email dan di set <b>expiration</b> selama 12 jam dari waktu di generate\n4. Handling Response sesuai dokumentasi Response dibawah")
         @RequestBody(content = @Content(examples = @ExampleObject(value = "{\r\n" + //
                         " \"email\":\"Emailtesting@gmail.com\",\r\n" + //
-                        "\"password\":\"Pass123\"\r\n" + //
+                        "\"password\":\"Pass123123\"\r\n" + //
                         "}")))
         // @BodyResponsesApi(successresponse = ApiResponseData.class, errorresponse =
         // ApiResponseData.class)

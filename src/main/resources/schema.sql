@@ -7,7 +7,7 @@ IF NOT EXISTS DATATASK;
 create table
 if not exists DATATASK.users
 (
-    id_user varchar
+    iduser varchar
 (100) primary key,
     name varchar
 (100),
@@ -20,18 +20,18 @@ tokenlogin varchar
 );
 
 --create tugas table
-create table
-if not exists DATATASK.tugassaya
-(
-    id_tugas serial primary key,
-    namatugas varchar
-(100),
-    mulaitugas timestamp not null,
-    berakhirtugas timestamp not null,
-    deskripsi text,
-    id_user varchar
-(100) ,
-    foreign key
-(id_user) references DATATASK.users
-(id_user)
-);
+-- create table
+-- if not exists DATATASK.tugassaya
+-- (
+--     idtugas serial primary key,
+--     namatugas varchar
+-- (100),
+--     mulaitugas timestamp not null,
+--     berakhirtugas timestamp not null,
+--     deskripsi text,
+--     id_user varchar
+-- (100) ,
+--     foreign key
+-- (iduser) references DATATASK.users
+-- (iduser)
+-- );

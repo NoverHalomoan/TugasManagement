@@ -18,8 +18,7 @@ import jakarta.validation.constraints.Email;
 public class Users {
 
     @Id
-    @JsonIgnore
-    @Column(name = "id_user")
+    @Column(name = "iduser")
     private String iduser;
     @Column(nullable = false)
     private String name;
@@ -32,12 +31,13 @@ public class Users {
     // @JsonInclude(JsonInclude.Include.NON_EMPTY) // diugunakan supaya dta ngak ke
     // ikut
     @JsonIgnore
-    private String token;
+    private String tokenlogin;
 
     private String profile_image;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @JsonIgnore
     private List<TugasSaya> tugasSayaList;
 
     public List<TugasSaya> getTugasSayaList() {
@@ -98,12 +98,12 @@ public class Users {
         this.iduser = iduser;
     }
 
-    public String getToken() {
-        return token;
+    public String getTokenlogin() {
+        return tokenlogin;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setTokenlogin(String tokenlogin) {
+        this.tokenlogin = tokenlogin;
     }
 
 }

@@ -11,7 +11,7 @@ public class GetRepositoryCoustume implements CustomeRepository {
     private EntityManager entityManager;
 
     @Override
-    public Optional<Users> findByToken(String token) {
+    public Optional<Users> findByTokenlogin(String token) {
         String sql = "SELECT u FROM Users u WHERE u.token = :token";
         return entityManager.createQuery(sql, Users.class).setParameter("token", token).getResultStream().findAny();
     }

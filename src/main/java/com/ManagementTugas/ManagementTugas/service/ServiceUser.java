@@ -60,7 +60,7 @@ public class ServiceUser {
                 apiResponseData.setStatus("200");
                 apiResponseData.setMessage("Berhasil Login !");
                 apiResponseData.setData(responseLoginDTO);
-                userlogin.get().setToken(tokenlogin);
+                userlogin.get().setTokenlogin(tokenlogin);
                 userRepository.save(userlogin.get());
                 generatedToken.saveTokenOnlyCoocies(tokenlogin, responses);
 
@@ -129,10 +129,10 @@ public class ServiceUser {
             apiResponseData.setStatus("403");
             apiResponseData.setData(null);
         }
-        Optional<Users> findusers = customeRepository.findByToken(tokendata);
+        Optional<Users> findusers = customeRepository.findByTokenlogin(tokendata);
         apiResponseData.setMessage("Sukses");
         apiResponseData.setStatus("200");
-        findusers.get().setToken(null);
+        findusers.get().setTokenlogin(null);
         apiResponseData.setData(findusers);
         return apiResponseData;
     }
@@ -140,7 +140,7 @@ public class ServiceUser {
     // get detail user and update data
     public ApiResponseData<Object> updateuserprofile(CreateUserDTO createUserDTO, HttpServletRequest request) {
         String tokendata = GeneratedToken.gettokenvalidasi(request);
-        Optional<Users> usersData = customeRepository.findByToken(tokendata);
+        Optional<Users> usersData = customeRepository.findByTokenlogin(tokendata);
         if (tokendata.isEmpty() || tokendata.isBlank() || tokendata == "") {
             apiResponseData.setMessage("Token tidak tidak valid atau kadaluwarsa");
             apiResponseData.setStatus("403");

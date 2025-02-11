@@ -6,6 +6,6 @@ import com.ManagementTugas.ManagementTugas.model.Users;
 
 public interface CustomeRepository {
 
-    Optional<Users> findByToken(String token);
+    Optional<Users> findByTokenlogin(String token);
 
 }

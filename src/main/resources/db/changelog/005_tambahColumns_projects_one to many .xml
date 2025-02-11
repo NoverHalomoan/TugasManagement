@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="2" author="nover">
-        <addForeignKeyConstraint baseTableName="tugas" baseColumnNames="id_project"
+        <addForeignKeyConstraint baseTableName="tugas" baseColumnNames="idproject"
             constraintName="fk_child_projects" referencedTableName="projects"
             referencedColumnNames="id"
             onDelete="CASCADE" />

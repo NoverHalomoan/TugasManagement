@@ -6,7 +6,7 @@
 
     <changeSet id="2" author="nover">
         <addColumn tableName="tugas">
-            <column name="id_project" type="bigint">
+            <column name="idproject" type="bigint">
                 <constraints nullable="false" />
             </column>
         </addColumn>

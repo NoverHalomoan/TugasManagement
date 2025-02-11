@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import com.ManagementTugas.ManagementTugas.DTOS.MapperAllDatas;
 import com.ManagementTugas.ManagementTugas.model.ProjectDTO;
 import com.ManagementTugas.ManagementTugas.model.Projects;
 
@@ -16,32 +18,53 @@ public class AbstractRepository {
 
     protected final JdbcClient jdbcClient;
 
-    public AbstractRepository(JdbcClient jdbcClient) {
+    private final MapperAllDatas mapperAllDatas;
+
+    private final ProjectsRepository projectsRepository;
+
+    public AbstractRepository(JdbcClient jdbcClient, ProjectsRepository projectsRepository,
+            MapperAllDatas mapperAllDatas) {
         this.jdbcClient = jdbcClient;
+        this.projectsRepository = projectsRepository;
+        this.mapperAllDatas = mapperAllDatas;
     }
 
     public Optional<Projects> getProjectName(String namaprojects) {
-        return jdbcClient.sql("select * from datatask.projects where name= :nama").param("nama", namaprojects)
+        return jdbcClient.sql(
+                "select * from datatask.projects u where name= :nama")
+                .param("nama", namaprojects)
                 .query(Projects.class).optional();
     }
 
     public Optional<Projects> getProjctbyid(Integer idproject) {
-        return jdbcClient.sql("select * from datatask.projects where id_project= :id").param("id", idproject)
+        return jdbcClient.sql(
+                "select * from datatask.projects where idproject= :id")
+                .param("id", idproject)
                 .query(Projects.class).optional();
     }
 
-    public Projects addingProject(ProjectDTO projectDTO) {
-        Projects projects = getProjectName(projectDTO.nama()).get();
+    // get all projects
+    public List<Projects> getallprojects() {
+        return projectsRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    }
 
-        if (!projects.getId_project().toString().isEmpty()) {
-            return projects;
+    public Projects addingProject(ProjectDTO projectDTO) {
+        System.out.println("Error disini :" + projectDTO.nama());
+        Optional<Projects> projects = getProjectName(projectDTO.nama());
+
+        if (projects.isPresent()) {
+            return projects.get();
         } else {
-            var updated = jdbcClient.sql("Insert into datatask.Projects(name, description, created_at) values(?,?,?)")
-                    .params(List.of(projectDTO.nama(), projectDTO.description(), LocalDateTime.now())).update();
-            projects = getProjectName(projectDTO.nama()).get();
+            Projects newproject = mapperAllDatas.createnewproject(projectDTO);
+            projectsRepository.save(newproject);
+            // var updated = jdbcClient.sql("Insert into datatask.Projects(name,
+            // description, created_at) values(?,?,?)")
+            // .params(List.of(projectDTO.nama(), projectDTO.description(),
+            // LocalDateTime.now())).update();
+            projects = getProjectName(projectDTO.nama());
 
         }
-        return projects;
+        return projects.get();
     }
 
 }

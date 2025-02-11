@@ -50,6 +50,11 @@
             <version>4.24.0</version>  <!-- Pastikan versinya yang terbaru -->
         </dependency>
 
+        <!-- Spring thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
         <!-- Spring Boot Devtools (Optional for development) -->
         <dependency>

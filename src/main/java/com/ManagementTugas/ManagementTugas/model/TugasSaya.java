@@ -1,12 +1,9 @@
 package com.ManagementTugas.ManagementTugas.model;
 
 import java.time.LocalDateTime;
-import java.time.Year;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -14,25 +11,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(schema = "datatask", name = "tugassaya")
 public class TugasSaya {
     @Id
-    @JsonProperty("id_tugas")
-    @Column(name = "id_tugas")
-    private String id_tugas;
-
-    public String getId_tugas() {
-        return id_tugas;
-    }
-
-    public void setId_tugas(String id_tugas) {
-        this.id_tugas = id_tugas;
-    }
+    @JsonProperty("idtugas")
+    @Column(name = "idtugas")
+    private String idtugas;
 
     @JsonProperty("namatugas")
     private String namatugas;
@@ -44,12 +31,24 @@ public class TugasSaya {
     @JsonProperty("deskripsi")
     private String deskripsi;
 
-    public String getIde_tugas() {
-        return ide_tugas;
-    }
+    @JsonProperty("completed")
+    private boolean completed;
 
-    public void setIde_tugas(String ide_tugas) {
-        this.ide_tugas = ide_tugas;
+    // @JsonIgnore
+    // private Object TugasSaya;
+
+    @ManyToOne
+    @JoinColumn(name = "iduser")
+    @JsonBackReference
+    private Users users;
+
+    @ManyToOne
+    @JoinColumn(name = "idproject", referencedColumnName = "idproject")
+    @JsonBackReference
+    private Projects projects;
+
+    public TugasSaya() {
+
     }
 
     public Users getUsers() {
@@ -67,20 +66,6 @@ public class TugasSaya {
     public void setProjects(Projects projects) {
         this.projects = projects;
     }
-
-    @JsonProperty("completed")
-    private boolean completed;
-    private String ide_tugas;
-
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    @JsonBackReference
-    private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "id_project")
-    @JsonBackReference
-    private Projects projects;
 
     public String getNamatugas() {
         return namatugas;
@@ -120,6 +105,14 @@ public class TugasSaya {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getIdtugas() {
+        return idtugas;
+    }
+
+    public void setIdtugas(String idtugas) {
+        this.idtugas = idtugas;
     }
 
     //
