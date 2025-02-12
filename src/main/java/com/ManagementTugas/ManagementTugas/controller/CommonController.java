@@ -11,6 +11,12 @@ import com.ManagementTugas.ManagementTugas.model.registerForm;
 @Controller
 public class CommonController {
 
+    @GetMapping("/")
+    public String awalLogin(Model model) {
+        model.addAttribute("loginForm", new LoginDTO());
+        return "login";
+    }
+
     @GetMapping("/loginapp")
     public String tampilanLogin(Model model) {
         model.addAttribute("loginForm", new LoginDTO());
@@ -24,8 +30,13 @@ public class CommonController {
     }
 
     @GetMapping("/home")
-    public String tampilanhime(Model model) {
+    public String tampilanhome(Model model) {
         return "home";
+    }
+
+    @GetMapping("/portfolio")
+    public String tampilanprofile(Model model) {
+        return "profile";
     }
 
 }

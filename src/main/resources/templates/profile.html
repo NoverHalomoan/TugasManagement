@@ -17,30 +17,26 @@
         font-family: "Roboto", sans-serif;
         background-color: #f4f7fc;
       }
-      .main-content {
-        margin-left: 220px;
-        padding: 20px;
-      }
-      .card-header {
-        background-color: #007bff;
-        color: white;
-      }
-      .card {
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-      }
-      .card-body {
-        background-color: #ffffff;
-      }
       .navbar {
         background-color: #343a40;
       }
       .navbar a {
         color: white;
       }
-      .sidebarber {
-        margin-top: 100px;
+      .container{
+        max-width: 100%
+      }
+      .sidebarber-one {
+        margin-top: 1px;
+        margin-left:
         height: 70%;
+        background-color:rgb(39, 94, 150);
+      }
+      .sidebarber-two {
+        margin-top: 1px;
+        margin-left:
+        height: 70%;
+        background-color:rgb(19, 41, 63);
       }
       .sidebarber a {
         text-decoration: none;
@@ -71,9 +67,9 @@
             <li class="nav-item">
               <a class="nav-link active" th:href="@{/home}">Home</a>
             </li>
-            <!--<li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" th:href="@{/portfolio}">Profile</a>
-            </li>-->
+            </li>
             <li class="nav-item">
               <a class="nav-link" th:href="@{/loginapp}">Logout</a>
             </li>
@@ -85,15 +81,11 @@
     <!-- Main Content -->
     <div class="container">
       <div class="row">
-        <div class="col-md-12 sidebarber">
-          <h3><u>Testing API</u></h3>
-          <ul class="list-group">
-            <a href="/swagger-ui/index.html"
-              ><li class="list-group-item disabled">
-                1. Testing API Swagger
-              </li></a
-            >
-          </ul>
+        <div class="col-md-4 sidebarber-one">
+          <h1>Bagian 1</h1>
+        </div>
+        <div class="col-md-8 sidebarber-two">
+          <h1>Bagian 1</h1>
         </div>
       </div>
     </div>
