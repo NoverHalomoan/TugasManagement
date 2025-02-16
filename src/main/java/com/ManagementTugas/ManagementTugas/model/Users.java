@@ -28,6 +28,8 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
+    private Boolean activestatus;
+
     // @JsonInclude(JsonInclude.Include.NON_EMPTY) // diugunakan supaya dta ngak ke
     // ikut
     @JsonIgnore
@@ -104,6 +106,14 @@ public class Users {
 
     public void setTokenlogin(String tokenlogin) {
         this.tokenlogin = tokenlogin;
+    }
+
+    public Boolean getActivestatus() {
+        return activestatus;
+    }
+
+    public void setActivestatus(Boolean activestatus) {
+        this.activestatus = activestatus;
     }
 
 }

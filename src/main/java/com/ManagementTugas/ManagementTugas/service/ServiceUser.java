@@ -1,5 +1,6 @@
 package com.ManagementTugas.ManagementTugas.service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,16 +9,24 @@ import org.slf4j.*;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ManagementTugas.ManagementTugas.DTOS.CreateUserDTO;
 import com.ManagementTugas.ManagementTugas.DTOS.MapperUser;
 import com.ManagementTugas.ManagementTugas.DTOS.ResponseLoginDTO;
 import com.ManagementTugas.ManagementTugas.controller.ApiResponseData;
+import com.ManagementTugas.ManagementTugas.model.Imageuploading;
 import com.ManagementTugas.ManagementTugas.model.LoginDTO;
 import com.ManagementTugas.ManagementTugas.model.Users;
 import com.ManagementTugas.ManagementTugas.repository.CustomeRepository;
+import com.ManagementTugas.ManagementTugas.repository.ImagesUploadRepository;
 import com.ManagementTugas.ManagementTugas.repository.UserRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
+import io.swagger.v3.core.util.Json;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -29,16 +38,18 @@ public class ServiceUser {
     private final CustomeRepository customeRepository;
     private final MapperUser mapperUser;
     private final GeneratedToken generatedToken;
+    private final ImagesUploadRepository imagesUploadRepository;
     private static ApiResponseData<Object> apiResponseData = new ApiResponseData<>();
 
     private static final Logger log = LoggerFactory.getLogger(ServiceTask.class);
 
     public ServiceUser(UserRepository userRepository, MapperUser mapperUser, GeneratedToken generatedToken,
-            CustomeRepository customeRepository) {
+            CustomeRepository customeRepository, ImagesUploadRepository imagesUploadRepository) {
         this.userRepository = userRepository;
         this.mapperUser = mapperUser;
         this.generatedToken = generatedToken;
         this.customeRepository = customeRepository;
+        this.imagesUploadRepository = imagesUploadRepository;
     }
 
     // for login
@@ -116,7 +127,15 @@ public class ServiceUser {
 
     // Just Checkin Validasi of token
     public ApiResponseData<Object> validasitokens(HttpServletRequest request) {
-        // System.out.println(GeneratedToken.gettokenvalidasi(request));
+        if (generatedToken.adatokendata(request) == 0) {
+            apiResponseData.setMessage("Token tidak tidak valid atau kadaluwarsa");
+            apiResponseData.setStatus("403");
+            apiResponseData.setData(null);
+        } else {
+            apiResponseData.setMessage("Sukses Login");
+            apiResponseData.setStatus("200");
+            apiResponseData.setData(null);
+        }
         return apiResponseData;
     }
 
@@ -184,5 +203,58 @@ public class ServiceUser {
         }
 
         return apiResponseData;
+    }
+
+    private JsonNode createJsonWithBase64(String base64File) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode jsonNode = objectMapper.createObjectNode();
+        jsonNode.put("file", base64File); // Menyimpan file dalam bentuk Base64
+        return jsonNode;
+
+    }
+
+    public ApiResponseData<Object> upload_fileprofile(HttpServletRequest httpServletRequest,
+            MultipartFile multipartFile) {
+        try {
+            System.out.println(multipartFile.getBytes());
+            byte[] datafile = multipartFile.getBytes();
+            String jsonstring = new String(datafile);
+            String base64File = Base64.getEncoder().encodeToString(datafile);
+            // JSONPObject jsonpObject = new JSONPObject("FileJSON", base64File);
+            // StringB jsonpObject = (String) new JSONPObject("FileJSON",
+            // base64File).getValue();
+            // String iddokument = generatedToken.generatedimageid();
+            Imageuploading imageuploadings = new Imageuploading();
+            JsonNode fileJson = createJsonWithBase64(base64File);
+            Json FTJSAN = new Json();
+            System.out.println(fileJson);
+            // imageuploadings.setFilejson(base64File);
+            // imageuploadings.setFletype(multipartFile.getContentType());
+            // imageuploadings.setIddocument("1233333");
+            try {
+                imagesUploadRepository.insertFile(datafile, FTJSAN, multipartFile.getContentType(), "11111ww");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        } catch (Exception e) {
+
+        }
+        return apiResponseData;
+    }
+
+    // get all data users by common
+    public List<Users> show_findalldatauser() {
+        return userRepository.findAll();
+    }
+
+    // update user personal
+    public List<Users> update_userpersonal(String iduser, String name, boolean activestatus) {
+        Users users = userRepository.findByiduser(iduser).get();
+        users.setName(name);
+        users.setActivestatus(activestatus);
+        userRepository.save(users);
+        return userRepository.findAll();
+
     }
 }

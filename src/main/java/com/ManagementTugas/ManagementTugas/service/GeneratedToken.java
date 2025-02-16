@@ -1,12 +1,17 @@
 package com.ManagementTugas.ManagementTugas.service;
 
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Year;
+import java.time.ZoneId;
 import java.util.Base64;
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -108,7 +113,6 @@ public class GeneratedToken {
     }
 
     public Integer adatokendata(HttpServletRequest response) {
-        System.out.println("Get Cocies");
         if (response.getCookies() == null) {
             return 0;
         }
@@ -135,6 +139,8 @@ public class GeneratedToken {
     }
 
     // Generated ID for tugas
+    // this is for create sequence CREATE SEQUENCE datatask.custom_id_seq START 1
+    // INCREMENT 1;
     public String generatedIdTugas() {
         int years = Year.now().getValue() % 100;
         Long nextval = jdbcTemplate.queryForObject("select nextval('datatask.custom_id_seq')", Long.class);
@@ -143,4 +149,17 @@ public class GeneratedToken {
         return "T" + years + sequenceformat;
     }
 
+    // this is for generated imageid
+    public String generatedimageid() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddmmyyyy");
+        // String dateString = "2023-10-10";
+        // Date parsedDate = simpleDateFormat.parse(dateString);
+        Date dates = new Date();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        dates = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        Long nextinterval = jdbcTemplate.queryForObject("Select nextval('datatask.image_idgenerated')", Long.class);
+        String nexString = simpleDateFormat.format(dates) + String.format("%08d", nextinterval);
+        return nexString;
+
+    }
 }

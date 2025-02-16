@@ -1,12 +1,12 @@
 package com.ManagementTugas.ManagementTugas.repository;
 
-import java.util.Optional;
+import java.util.*;
 
 import com.ManagementTugas.ManagementTugas.model.TugasSaya;
 
 public interface InterCustomeTaskRepo {
 
-    // TugasSaya saveTugasSaya(TugasSaya tugasSaya);
+    List<TugasSaya> findBynamatugas(String namatugas);
 
     // Optional<TugasSaya> findByidtugas(String idtugas);
 

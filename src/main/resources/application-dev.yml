@@ -10,3 +10,11 @@ spring:
 sql:
   init: mode:always
     schema-locations:classpath:/schema.sql
+springdoc:
+  api-doc:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+  group-confligs:
+    - group: project-pmanagement
+      path-to-match: /api/pmanagement/**

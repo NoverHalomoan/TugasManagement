@@ -1,8 +1,11 @@
 package com.ManagementTugas.ManagementTugas.controller;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ManagementTugas.ManagementTugas.DTOS.CreateTugasBaru;
@@ -19,8 +22,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@Tag(name = "Project and Task")
-
+@Tag(name = "2. Project and Task")
+@RequestMapping("/api/tugas-management")
 public class TaskController {
 
         private final ServiceTask serviceTask;
@@ -87,7 +90,6 @@ public class TaskController {
         })
         public ResponseEntity<?> addTugas(HttpServletRequest httpRequest,
                         @Valid @org.springframework.web.bind.annotation.RequestBody CreateTugasBaru createTugasBaru) {
-
                 return ResponseEntity.status(200).body(serviceTask.addnewTask(httpRequest, createTugasBaru));
         }
 
@@ -96,4 +98,12 @@ public class TaskController {
         public ResponseEntity<?> getallprojects(HttpServletRequest httpRequest) {
                 return ResponseEntity.status(200).body(serviceTask.getallprojects(httpRequest));
         }
+
+        @PostMapping("/search-tugas")
+        public ResponseEntity<?> searchtugas(HttpServletRequest httpServletRequest,
+                        @RequestParam("searchtask") String searchtask) {
+                return ResponseEntity.status(200).body(serviceTask.searchtugas(searchtask));
+
+        }
+
 }

@@ -8,9 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ManagementTugas.ManagementTugas.DTOS.CreateUserDTO;
 import com.ManagementTugas.ManagementTugas.model.LoginDTO;
@@ -28,7 +33,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@Tag(name = "User")
+@Tag(name = "1. User")
+@RequestMapping("/api/tugas-management")
 public class UsersController {
 
         private final ServiceUser serviceUser;
@@ -237,6 +243,20 @@ public class UsersController {
         public ResponseEntity<?> getallusers(HttpServletRequest httpRequest) {
 
                 apiResponseData = serviceUser.getalldatausers(httpRequest);
+                return ResponseEntity.status(200).body(apiResponseData);
+        }
+
+        @PutMapping("/upload/profile")
+        public ResponseEntity<?> updateprofileimage(HttpServletRequest httpServletRequest,
+                        @RequestParam("File") MultipartFile multipartFile) {
+                try {
+                        apiResponseData = serviceUser.upload_fileprofile(httpServletRequest, multipartFile);
+                } catch (Exception e) {
+                        apiResponseData.setMessage("Gagal Memproses File");
+                        apiResponseData.setStatus("200");
+                        apiResponseData.setData(e.getMessage());
+                }
+
                 return ResponseEntity.status(200).body(apiResponseData);
         }
 

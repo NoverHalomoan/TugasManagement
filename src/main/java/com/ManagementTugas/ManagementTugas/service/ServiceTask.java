@@ -150,4 +150,8 @@ public class ServiceTask {
         return ResponseInsert(status, message, datas);
     }
 
+    public ApiResponseData<Object> searchtugas(String namtugas) {
+        return ResponseInsert("200", "Sukses Search Data", repositoryCustomeTask.findBynamatugas(namtugas));
+    }
+
 }

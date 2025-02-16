@@ -21,6 +21,14 @@ spring:
       schema-locations:classpath:/schema.sql
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+springdoc:
+  api-doc:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+  group-confligs:
+    - group: project-pmanagement
+      path-to-match: /api/tugas-management/**
 
   # flyway: enabled:false
   #   baseline-on-migrate:true

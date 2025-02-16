@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retail Barang</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f7fc;
+      }
+      .navbar {
+        background-color: #343a40;
+      }
+      .navbar a {
+        color: white;
+      }
+      .container {
+        margin-top: 10%;
+      }
+      .table-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .table-container .header {
+        background-color: #002f63;
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .table-container .addingbutton {
+        position: static;
+        border-radius: 10px;
+        background-color: white;
+        padding: 5px;
+        width: 190px;
+        margin-left: 80%;
+      }
+      .table-container thead th {
+        background-color: rgb(7, 55, 109);
+        color: white;
+      }
+      .table-container thead th:first-child {
+        border: none;
+        border-top-left-radius: 10px;
+      }
+      .table-container thead th:last-child {
+        border: none;
+        border-top-right-radius: 10px;
+      }
+      .table-container table tbody td {
+        text-align: left;
+      }
+      .table-container table tbody .td-button {
+        padding: 10px;
+        margin: 0 auto;
+        display: inline;
+      }
+
+      .table-container table tbody .td-button .update_users {
+        color: white;
+        background-color: #5fc9f3;
+      }
+      .table-container table tbody .td-button .delete_users {
+        color: white;
+        background-color: #1e549f;
+      }
+      h1 {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">My Dashboard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" th:href="@{/home}">Home</a>
+            </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" th:href="@{/portfolio}">Profile</a>
+            </li>-->
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/loginapp}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Model Dialog-->
+    <!--This is for create a modal-->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Data User</h5>
+          </div>
+          <div class="modal-body">
+            <form th:action="@{/usersform/updatestatusactive}" method="post">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  id="iduser"
+                  name="iduser"
+                  class="form-control"
+                  hidden
+                />
+                <label class="form-label">Name</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="name"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select
+                  id="userStatus"
+                  name="activestatus"
+                  class="form-control"
+                >
+                  <option value="true">Active</option>
+                  <option value="false">Not Active</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="container mt-5">
+      <div class="table-container">
+        <div class="header">
+          <h2>Data Users</h2>
+          <button class="btn btn-add addingbutton">Add New User</button>
+        </div>
+        <table class="table table-bordered">
+          <thead class="thead-header">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Id User</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="user,stat : ${data_users}">
+              <th scope="row" th:text="${stat.index+1}"></th>
+              <td th:text="${user.iduser}"></td>
+              <td th:text="${user.name}"></td>
+              <td th:text="${user.email}"></td>
+              <td>
+                <span
+                  th:classappend="${user.activestatus} ? 'badge bg-success' : 'badge bg-danger'"
+                  th:text="${user.activestatus} ? 'Active' : 'Not Active'"
+                >
+                </span>
+              </td>
+              <td>
+                <div class="button-container td-button">
+                  <button
+                    class="btn update_users"
+                    th:attr="data-bs-iduser=${user.iduser},data-bs-name=${user.name},data-bs-activestatus=${user.activestatus}"
+                    onclick="openModaluser(this)"
+                  >
+                    Update
+                  </button>
+                  <button class="btn delete_users">Delete</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+  </body>
+</html>

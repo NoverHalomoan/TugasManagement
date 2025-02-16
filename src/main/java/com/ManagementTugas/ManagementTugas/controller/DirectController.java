@@ -7,15 +7,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ManagementTugas.ManagementTugas.DTOS.CreateUserDTO;
 import com.ManagementTugas.ManagementTugas.model.LoginDTO;
+import com.ManagementTugas.ManagementTugas.model.Users;
 import com.ManagementTugas.ManagementTugas.model.registerForm;
+import com.ManagementTugas.ManagementTugas.service.ServiceUser;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
@@ -23,11 +26,13 @@ import jakarta.validation.Valid;
 public class DirectController {
 
     private final UsersController usersController;
+    private final ServiceUser serviceUser;
 
     private static ApiResponseData<Object> apiResponseData = new ApiResponseData<>();
 
-    public DirectController(UsersController usersController) {
+    public DirectController(UsersController usersController, ServiceUser serviceUser) {
         this.usersController = usersController;
+        this.serviceUser = serviceUser;
     }
 
     @SuppressWarnings("unchecked")
@@ -93,6 +98,15 @@ public class DirectController {
             return "register";
         }
 
+    }
+
+    // for update status user
+    @PostMapping("/usersform/updatestatusactive")
+    public String updatestatusactive(@RequestParam String iduser, @RequestParam String name,
+            @RequestParam boolean activestatus, Model model) {
+        List<Users> allusers = serviceUser.update_userpersonal(iduser, name, activestatus);
+        model.addAttribute("users", allusers);
+        return "redirect:/usersform";
     }
 
 }
