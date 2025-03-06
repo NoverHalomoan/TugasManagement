@@ -1,5 +1,6 @@
 package com.ManagementTugas.ManagementTugas.controller;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class CommonController {
 
     @GetMapping("/")
     public String awalLogin(Model model) {
-        model.addAttribute("loginForm", new LoginDTO());
-        return "login";
+        // model.addAttribute("loginForm", new LoginDTO());
+        return "applicationHome";
     }
 
     @GetMapping("/loginapp")
@@ -75,7 +76,14 @@ public class CommonController {
     @GetMapping("/usersform")
     public String tampilandatausers(Model model) {
         List<Users> users = serviceUser.show_findalldatauser();
+        users.sort(Comparator.comparing(Users::getActivestatus).reversed());
         model.addAttribute("data_users", users);
         return "usersform";
     }
+
+    @GetMapping(path = "/serviceapp")
+    public String serviceApp(Model mode) {
+        return "home";
+    }
+
 }

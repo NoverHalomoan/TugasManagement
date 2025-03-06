@@ -103,9 +103,14 @@ public class DirectController {
     // for update status user
     @PostMapping("/usersform/updatestatusactive")
     public String updatestatusactive(@RequestParam String iduser, @RequestParam String name,
-            @RequestParam boolean activestatus, Model model) {
-        List<Users> allusers = serviceUser.update_userpersonal(iduser, name, activestatus);
-        model.addAttribute("users", allusers);
+            @RequestParam boolean activestatus, @RequestParam String flagstatus, Model model) {
+        if (flagstatus.matches("1")) {
+            List<Users> allusers = serviceUser.delete_userpersonal(iduser);
+            model.addAttribute("users", allusers);
+        } else {
+            List<Users> allusers = serviceUser.update_userpersonal(iduser, name, activestatus);
+            model.addAttribute("users", allusers);
+        }
         return "redirect:/usersform";
     }
 

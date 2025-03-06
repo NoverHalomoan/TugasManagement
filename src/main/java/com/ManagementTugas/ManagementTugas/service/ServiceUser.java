@@ -257,4 +257,12 @@ public class ServiceUser {
         return userRepository.findAll();
 
     }
+
+    // delete user
+    public List<Users> delete_userpersonal(String iduser) {
+        Users users = userRepository.findByiduser(iduser).get();
+        userRepository.delete(users);
+        return userRepository.findAll();
+
+    }
 }

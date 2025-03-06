@@ -24,6 +24,10 @@
         width: 100%;
         max-width: 400px;
       }
+      .buttonapp {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
@@ -72,6 +76,11 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Login</button>
+        <a href="/serviceapp"
+          ><button type="submit" class="btn btn-primary w-100 buttonapp">
+            Go To App
+          </button></a
+        >
         <div th:if="${loginerror}">
           <a href="/registerapp">Daftar Disini</a>
         </div>

@@ -87,6 +87,14 @@ public class UsersController {
                                 .body(apiResponseData);
         }
 
+        @PostMapping(path = "/creates")
+        public ResponseEntity<?> createUserNew(CreateUserDTO createUserDTO) {
+                
+                apiResponseData.setMessage("Wajib Mengisi Header");
+                apiResponseData.setStatus("403");
+                return ResponseEntity.status(HttpStatus.OK).body(apiResponseData);
+        }
+
         // For Login
         @Order(2)
         @PostMapping("/login")

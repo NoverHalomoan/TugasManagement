@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 @Hidden
 public class CreateUserDTO {
     @NotBlank(message = "Nama tidak boleh kosong")
+    @Size(min = 10, message = "Minimal Panjang nama 10 characters")
     private String name;
     @Email
     @Email(message = "Format email tidak sesuai")

@@ -114,15 +114,35 @@
         </div>
       </div>
     </nav>
+    <!--Model Dialog upload data-->
+    <div class="modal fade" id="uploaddatausers" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5>Register Upload Data User</h5>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Upload File Excel</label>
+              <input class="form-control" type="file" id="fileuserexcel" />
+            </div>
+            <button type="button" class="btn btn-primary float-end">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--Model Dialog-->
     <!--This is for create a modal-->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Update Data User</h5>
+            <h5 class="modal-title" id="hedaertagform"></h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="modal-body-update">
             <form th:action="@{/usersform/updatestatusactive}" method="post">
               <div class="mb-3">
                 <input
@@ -132,7 +152,14 @@
                   class="form-control"
                   hidden
                 />
-                <label class="form-label">Name</label>
+                <input
+                  type="text"
+                  id="flagstatus"
+                  name="flagstatus"
+                  class="form-control"
+                  hidden
+                />
+                <label class="form-label" id="name-label">Name</label>
                 <input
                   type="text"
                   id="username"
@@ -142,7 +169,7 @@
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Status</label>
+                <label class="form-label" id="status-label">Status</label>
                 <select
                   id="userStatus"
                   name="activestatus"
@@ -151,8 +178,20 @@
                   <option value="true">Active</option>
                   <option value="false">Not Active</option>
                 </select>
+                <h7 id="question-delete-user"></h7>
               </div>
-              <button type="submit" class="btn btn-success">Save</button>
+              <div class="floating-right">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  onclick="window.history.back();"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Save
+                </button>
+              </div>
             </form>
           </div>
         </div>
@@ -163,7 +202,12 @@
       <div class="table-container">
         <div class="header">
           <h2>Data Users</h2>
-          <button class="btn btn-add addingbutton">Add New User</button>
+          <button
+            class="btn btn-add addingbutton"
+            onclick="uploadmanualuser(this)"
+          >
+            Add New User
+          </button>
         </div>
         <table class="table table-bordered">
           <thead class="thead-header">
@@ -193,12 +237,18 @@
                 <div class="button-container td-button">
                   <button
                     class="btn update_users"
-                    th:attr="data-bs-iduser=${user.iduser},data-bs-name=${user.name},data-bs-activestatus=${user.activestatus}"
+                    th:attr="data-bs-iduser=${user.iduser},data-bs-name=${user.name},data-bs-activestatus=${user.activestatus},data-bs-status=0"
                     onclick="openModaluser(this)"
                   >
                     Update
                   </button>
-                  <button class="btn delete_users">Delete</button>
+                  <button
+                    class="btn delete_users"
+                    th:attr="data-bs-iduser=${user.iduser},data-bs-name=${user.name},data-bs-activestatus=${user.activestatus},data-bs-status=1"
+                    onclick="openModaluser(this)"
+                  >
+                    Delete
+                  </button>
                 </div>
               </td>
             </tr>

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -35,4 +36,14 @@ public class GlobalExceptionHandler {
         apiResponseData.setMessage(ex.getMessage());
         return ResponseEntity.badRequest().body(apiResponseData);
     }
+
+    @SuppressWarnings("unchecked")
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<?> Exceptionhandle(ResponseStatusException ex) {
+        apiResponseData.setData(null);
+        apiResponseData.setStatus(Integer.toString(ex.getStatusCode().value()));
+        apiResponseData.setMessage(ex.getReason());
+        return ResponseEntity.badRequest().body(apiResponseData);
+    }
+
 }

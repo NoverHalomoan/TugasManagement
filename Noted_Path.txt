@@ -13,3 +13,7 @@ spring.data.mongodb.uri=mongodb://UserTask:Admin123@localhost:27017/UserTask
 
 
 docker run -d --name container-UserTask -e POSTGRES_USER=UserTask -e POSTGRES_PASSWORD=admin123 -e POSTGRES_DB=UserTask -p 5433:5432 \ postgres
+
+
+Jalankan java docker :
+docker run --rm java17-app
