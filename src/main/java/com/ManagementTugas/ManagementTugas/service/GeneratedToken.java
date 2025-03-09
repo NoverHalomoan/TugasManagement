@@ -162,4 +162,8 @@ public class GeneratedToken {
         return nexString;
 
     }
+
+    public static String generatedotp() {
+        return "";
+    }
 }

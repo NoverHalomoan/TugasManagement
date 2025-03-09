@@ -41,6 +41,8 @@ public class AccountService {
 
     }
 
+    // private String generated
+
     private DTOAccountResponse toDtoAccountResponse(Accounts accounts, Verification verification) {
         return DTOAccountResponse.builder().build();
     }
