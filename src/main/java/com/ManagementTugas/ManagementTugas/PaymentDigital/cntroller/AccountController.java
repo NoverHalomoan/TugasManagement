@@ -27,4 +27,13 @@ public class AccountController {
         return ResponseWebDigitalPaymnet.<DTOAccountResponse>builder().data(response).build();
     }
 
+    @PostMapping(path = "/newAccount")
+    public ResponseWebDigitalPaymnet<?> createNewAccounts(DTOAccountRequest dtoAccountRequest) {
+
+        return accountService.createBased(dtoAccountRequest);
+    }
+
+
+
+
 }

@@ -3,12 +3,13 @@ package com.ManagementTugas.ManagementTugas.controller;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ManagementTugas.ManagementTugas.DTOS.CreateUserDTO;
+import com.ManagementTugas.ManagementTugas.PaymentDigital.entity.Accounts;
+import com.ManagementTugas.ManagementTugas.PaymentDigital.service.AccountService;
 import com.ManagementTugas.ManagementTugas.model.LoginDTO;
 import com.ManagementTugas.ManagementTugas.model.Users;
 import com.ManagementTugas.ManagementTugas.model.registerForm;
@@ -22,11 +23,15 @@ public class CommonController {
     private final UsersController usersController;
     private final ServiceUser serviceUser;
 
+    @Autowired
+    private final AccountService accountservice;
+
     private static ApiResponseData<Object> apiResponseData = new ApiResponseData<>();
 
-    public CommonController(UsersController usersController, ServiceUser serviceUser) {
+    public CommonController(UsersController usersController, ServiceUser serviceUser, AccountService accountservice) {
         this.usersController = usersController;
         this.serviceUser = serviceUser;
+        this.accountservice = accountservice;
     }
 
     @GetMapping("/")
@@ -84,6 +89,13 @@ public class CommonController {
     @GetMapping(path = "/serviceapp")
     public String serviceApp(Model mode) {
         return "home";
+    }
+
+    @GetMapping(path = "/payment")
+    public String paymnetDigital(Model model) {
+        List<Accounts> accounts = accountservice.getAllAccount();
+        model.addAttribute("data_accounts", accounts);
+        return "payment/Payment";
     }
 
 }

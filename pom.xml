@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.24.0</version>  <!-- Pastikan versinya yang terbaru -->
+            <!-- <version>4.24.0</version>  Pastikan versinya yang terbaru -->
         </dependency>
 
         <!-- Spring thymeleaf-->
@@ -88,7 +88,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency> -->
-
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>5.2.3</version>
+</dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -110,6 +114,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
+
         <!--Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -148,7 +154,6 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.24.0</version>
                 <configuration>
                     <url>jdbc:postgresql://localhost:5433/UserTask</url>
                     <username>UserTask</username>

@@ -29,10 +29,13 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.swagger.v3.core.util.Json;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Validated
+@Slf4j
 public class ServiceUser {
     private final UserRepository userRepository;
     private final CustomeRepository customeRepository;
@@ -91,6 +94,7 @@ public class ServiceUser {
     }
 
     // for create users
+    @Transactional
     public ApiResponseData<Object> createUser(CreateUserDTO createUserDTO) {
         // chek data all
         if (createUserDTO.getEmail() == "" || createUserDTO.getName() == "" || createUserDTO.getPassword() == "") {
@@ -107,19 +111,24 @@ public class ServiceUser {
                     "name", createUserDTO.getName(),
                     "email", createUserDTO.getEmail()));
         } else {
+            log.info("Masuk User Services");
             String tokenid = generatedToken.generatedTokenid();
-            Users usernew = userRepository.save(mapperUser.tousers(tokenid, createUserDTO));
-            if (!usernew.getIduser().isEmpty()) {
-                apiResponseData.setMessage("Pendaftaran Akun Sukses");
-                apiResponseData.setStatus("200");
-                apiResponseData.setData(Map.of(
-                        "name", createUserDTO.getName(),
-                        "email", createUserDTO.getEmail()));
-            } else {
-                apiResponseData.setMessage("The server is busy. Please try again later.");
-                apiResponseData.setStatus("403");
-                apiResponseData.setData(usernew);
+            try{
+                Users usernew = userRepository.save(mapperUser.tousers(tokenid, createUserDTO));
+            }catch(Exception e){
+                log.info("Error "+e.getMessage());
             }
+            // if (!usernew.getIduser().isEmpty()) {
+            //     apiResponseData.setMessage("Pendaftaran Akun Sukses");
+            //     apiResponseData.setStatus("200");
+            //     apiResponseData.setData(Map.of(
+            //             "name", createUserDTO.getName(),
+            //             "email", createUserDTO.getEmail()));
+            // } else {
+            //     apiResponseData.setMessage("The server is busy. Please try again later.");
+            //     apiResponseData.setStatus("403");
+            //     apiResponseData.setData(usernew);
+            // }
         }
 
         return apiResponseData;

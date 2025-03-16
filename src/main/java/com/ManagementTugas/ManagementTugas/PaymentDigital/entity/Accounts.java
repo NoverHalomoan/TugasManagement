@@ -3,6 +3,9 @@ package com.ManagementTugas.ManagementTugas.PaymentDigital.entity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import com.ManagementTugas.ManagementTugas.PaymentDigital.request.DTOAccountRequest;
+import com.ManagementTugas.ManagementTugas.security.BCrypt;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,6 +64,17 @@ public class Accounts {
     @PreUpdate
     protected void onUpdateat() {
         updateat = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    public static Accounts toAccounts(DTOAccountRequest request) {
+        Accounts accounts = new Accounts();
+        accounts.setName(request.name());
+        accounts.setUsername(request.username());
+        accounts.setEmail(request.email());
+        accounts.setPassword(BCrypt.hashpw(request.password(), BCrypt.gensalt()));
+        accounts.setPhonenumber(request.phonenumber());
+        accounts.setIsverified(false);
+        return accounts;
     }
 
 }

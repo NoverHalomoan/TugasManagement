@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ManagementTugas.ManagementTugas.model.Users;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Integer>, CustomeRepository {
+public interface UserRepository extends JpaRepository<Users, String>, CustomeRepository {
 
     boolean existsByname(String name);
 

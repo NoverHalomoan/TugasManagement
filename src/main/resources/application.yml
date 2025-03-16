@@ -19,6 +19,10 @@ spring:
   sql:
     init: mode:always
       schema-locations:classpath:/schema.sql
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 springdoc:
@@ -29,10 +33,9 @@ springdoc:
   group-confligs:
     - group: project-pmanagement
       path-to-match: /api/tugas-management/**
-
-  # flyway: enabled:false
-  #   baseline-on-migrate:true
-  #   schemas:DATATASK
+# flyway: enabled:false
+#   baseline-on-migrate:true
+#   schemas:DATATASK
 # springdoc:
 #   swagger-ui:
 #     operations-sorter: name

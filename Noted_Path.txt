@@ -17,3 +17,7 @@ docker run -d --name container-UserTask -e POSTGRES_USER=UserTask -e POSTGRES_PA
 
 Jalankan java docker :
 docker run --rm java17-app
+
+
+create postgress database
+docker run -d --name postgres-microservices -e POSTGRES_USER=microservicesApp -e POSTGRES_PASSWORD=microservicesApp -e POSTGRES_DB=microservicesDB -p 5437:5432 -v /var/lib/postgresql/data postgres:latest
